@@ -1,3 +1,5 @@
+gui/
+scripts/
 data/
 result/
 *.fig
