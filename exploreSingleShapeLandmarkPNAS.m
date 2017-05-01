@@ -3,13 +3,15 @@ clearvars;
 path(pathdef);
 path(path, genpath('./utils'));
 
-data_path = '~/Work/MATLAB/DATA/PNAS/';
+data_path = '../data/PNAS/';
 sample_path = [data_path 'samples/'];
 meshes_path = [data_path 'meshes/'];
-MeshName = 'D09';
+% MeshName = 'D09';
+MeshName = 'x23';
+% MeshName = 'h08';
 
 load([sample_path MeshName '.mat']);
-numLmk = 50;
+numLmk = 40;
 % lambda = 0.5;
 
 figure;

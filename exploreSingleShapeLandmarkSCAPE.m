@@ -9,7 +9,7 @@ meshes_path = [data_path 'meshes/'];
 MeshName = 'mesh000';
 
 load([sample_path MeshName '.mat']);
-numLmk = 100;
+numLmk = 120;
 % lambda = 0.5;
 
 figure;

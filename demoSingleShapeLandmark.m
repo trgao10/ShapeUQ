@@ -5,7 +5,7 @@ path(path, genpath('./utils'));
 
 % flat = @(x) x(:);
 
-data_path = '~/Work/MATLAB/DATA/PNAS/';
+data_path = '../data/PNAS/';
 sample_path = [data_path 'samples/'];
 meshes_path = [data_path 'meshes/'];
 % samples_path = '~/Work/MATLAB/DATA/PNAS/samples/';
