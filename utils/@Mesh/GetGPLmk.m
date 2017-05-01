@@ -22,7 +22,7 @@ if size(G.E,1) > 2
 end
 EdgeIdxI = G.E(1,:);
 EdgeIdxJ = G.E(2,:);
-bandwidth = mean(sqrt(sum((G.V(:,EdgeIdxI)-G.V(:,EdgeIdxJ)).^2)))/3;
+bandwidth = mean(sqrt(sum((G.V(:,EdgeIdxI)-G.V(:,EdgeIdxJ)).^2)))/5;
 
 BNN = min(500,G.nV);
 atria = nn_prepare(G.V');
