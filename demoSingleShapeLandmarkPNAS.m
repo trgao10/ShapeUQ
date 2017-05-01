@@ -7,8 +7,9 @@ data_path = '../data/PNAS/';
 sample_path = [data_path 'samples/'];
 meshes_path = [data_path 'meshes/'];
 % MeshName = 'D09';
-MeshName = 'x23';
-% MeshName = 'h08';
+% MeshName = 'B03';
+% MeshName = 'x23';
+MeshName = 'h08';
 
 load([sample_path MeshName '.mat']);
 numLmk = 40;
