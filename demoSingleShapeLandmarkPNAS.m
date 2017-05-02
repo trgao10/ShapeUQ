@@ -3,16 +3,17 @@ clearvars;
 path(pathdef);
 path(path, genpath('./utils'));
 
-data_path = '../data/PNAS/';
+data_path = '../DATA/PNAS/';
 sample_path = [data_path 'samples/'];
 meshes_path = [data_path 'meshes/'];
 % MeshName = 'D09';
 % MeshName = 'B03';
 % MeshName = 'x23';
-MeshName = 'h08';
+% MeshName = 'h08';
+MeshName = 'j01';
 
 load([sample_path MeshName '.mat']);
-numLmk = 40;
+numLmk = 256;
 % lambda = 0.5;
 
 figure;

@@ -40,6 +40,8 @@ disp(['full kernel constructed in ' num2str(toc) ' sec.']);
 KernelTrace = diag(fullMatProd);
 GPLmkIdx = zeros(1,numLmk);
 
+invKn = zeros(numLmk);
+
 cback = 0;
 for j=1:numLmk
     for cc=1:cback
@@ -50,15 +52,30 @@ for j=1:numLmk
     if j == 1
         ptuq = KernelTrace;
     else
-        ptuq = KernelTrace - sum(fullMatProd(:,GPLmkIdx(1:(j-1)))'...
-            .*(fullMatProd(GPLmkIdx(1:(j-1)),GPLmkIdx(1:(j-1)))\fullMatProd(GPLmkIdx(1:(j-1)),:)),1)';
+        if j == 2
+            invKn(1:(j-1),1:(j-1)) = 1/fullMatProd(GPLmkIdx(1),GPLmkIdx(1));
+            ptuq = KernelTrace - sum(fullMatProd(:,GPLmkIdx(1:(j-1)))'...
+                .*(invKn(1:(j-1),1:(j-1))*fullMatProd(GPLmkIdx(1:(j-1)),:)),1)';
+        else
+            p = fullMatProd(GPLmkIdx(1:(j-2)),GPLmkIdx(j-1));
+            mu = 1./(fullMatProd(GPLmkIdx(j-1),GPLmkIdx(j-1))-p'*invKn(1:(j-2),1:(j-2))*p);
+            invKn(1:(j-2),1:(j-1)) = invKn(1:(j-2),1:(j-2))*[eye(j-2)+mu*(p*p')*invKn(1:(j-2),1:(j-2)),-mu*p];
+            invKn(j-1,1:(j-1)) = [invKn(1:(j-2),j-1)',mu];
+            productEntity = invKn(1:(j-1),1:(j-1))*fullMatProd(GPLmkIdx(1:(j-1)),:);
+            ptuq = KernelTrace - sum(fullMatProd(:,GPLmkIdx(1:(j-1)))'...
+                .*productEntity,1)';
+        end
     end
     [~,maxUQIdx] = max(ptuq);
     GPLmkIdx(j) = maxUQIdx;
 end
 
-ptuq = KernelTrace - sum(fullMatProd(GPLmkIdx,:)...
-    .*(fullMatProd(GPLmkIdx,GPLmkIdx)\fullMatProd(GPLmkIdx,:)),1)';
+p = fullMatProd(GPLmkIdx(1:(end-1)),GPLmkIdx(end));
+mu = 1./(fullMatProd(GPLmkIdx(end),GPLmkIdx(end))-p'*invKn(1:(end-1),1:(end-1))*p);
+invKn(1:(end-1),:) = invKn(1:(end-1),1:(end-1))*[eye(numLmk-1)+mu*(p*p')*invKn(1:(end-1),1:(end-1)),-mu*p];
+invKn(end,:) = [invKn(1:(end-1),end)',mu];
+ptuq = KernelTrace - sum(fullMatProd(:,GPLmkIdx)'...
+    .*(invKn*fullMatProd(GPLmkIdx,:)),1)';
 
 end
 
